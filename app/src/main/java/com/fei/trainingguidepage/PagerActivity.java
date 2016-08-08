@@ -11,8 +11,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -33,7 +31,7 @@ public class PagerActivity extends AppCompatActivity {
 
     int lastLeftValue = 0;
     CoordinatorLayout mCoordinator;
-    int page = 0;   //  to track page position
+    int mPage = 0;   //  to track mPage position
     private static final String TAG = "PagerActivity";
 
     @Override
@@ -71,8 +69,8 @@ public class PagerActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        mViewPager.setCurrentItem(page);
-        updateIndicators(page);
+        mViewPager.setCurrentItem(mPage);
+        updateIndicators(mPage);
         final int color1 = ContextCompat.getColor(this, R.color.cyan);
         final int color2 = ContextCompat.getColor(this, R.color.orange);
         final int color3 = ContextCompat.getColor(this, R.color.green);
@@ -96,9 +94,9 @@ public class PagerActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
 
-                page = position;
+                mPage = position;
 
-                updateIndicators(page);
+                updateIndicators(mPage);
 
                 switch (position) {
                     case 0:
@@ -128,8 +126,8 @@ public class PagerActivity extends AppCompatActivity {
         mNextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                page += 1;
-                mViewPager.setCurrentItem(page, true);
+                mPage += 1;
+                mViewPager.setCurrentItem(mPage, true);
             }
         });
 
@@ -161,27 +159,6 @@ public class PagerActivity extends AppCompatActivity {
                     i == position ? R.drawable.indicator_selected : R.drawable.indicator_unselected
             );
         }
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_pager, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -238,7 +215,7 @@ public class PagerActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
+            // getItem is called to instantiate the fragment for the given mPage.
             // Return a PlaceholderFragment (defined as a static inner class below).
             return PlaceholderFragment.newInstance(position + 1);
         }
